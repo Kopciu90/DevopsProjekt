@@ -1,0 +1,29 @@
+name: CI workflow
+
+on:
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Pull repo
+              uses: actions/checkout@v4
+
+            - name: Setup Python Enviroment
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.10"
+
+            - name: Upgrade Pip and Install Dependencie
+              run: |
+                  python -m pip install --upgrade pip
+
+            - name: Docker Image Build
+              run: docker build -t devops-proj .
+
+            - name: Run Placeholder Test
+              run: echo "Test"
